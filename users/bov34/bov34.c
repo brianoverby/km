@@ -73,23 +73,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_SYM] = LAYOUT_bov34(
-        DK_EXLM, CX_AT,   DK_HASH, CX_DLR,  DK_LPRN,                   DK_RPRN, DK_AMPR, DK_GRV,  DK_CIRC, DK_PERC,
-        DK_TILD, DK_UNDS, CX_PIPE, CX_BSLS, CX_LCBR,                   CX_RCBR, XXXXXXX, DK_ACUT, DK_QUOT, DK_DQUO,
-        DK_PLUS, DK_MINS, DK_ASTR, DK_EQL,  DK_LBRC,                   DK_RBRC, DK_DIAE, DK_AE,   DK_OE,   DK_AA,
+        DK_EXLM, CX_AT,   DK_HASH, CX_DLR,  DK_PERC,                   DK_LPRN, DK_RPRN, DK_CIRC, XXXXXXX, DK_TILD,
+        DK_AMPR, DK_ASTR, DK_UNDS, DK_QUOT, DK_DQUO,                   CX_LCBR, CX_RCBR, DK_DIAE, DK_ACUT, DK_GRV,
+        CX_PIPE, DK_PLUS, DK_MINS, DK_EQL,  CX_BSLS,                   DK_LBRC, DK_RBRC, DK_AE,   DK_OE,   DK_AA,
                                    _______, _______,                   _______, _______
     ),
 
     [_NAV] = LAYOUT_bov34(
-        KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,    KC_9,    KC_0,
-        OS_SHFT, OS_CTRL, OS_ALT,  OS_CMD,  KC_TAB,                    KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_BSPC,
-        CX_UNDO, CX_CUT,  CX_COPY, CX_PSTE, KC_ESC,                    KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_ENT,
+        KC_TAB,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   KC_PGUP, KC_HOME, KC_UP,   KC_END,  KC_BSPC,
+        OS_SHFT, OS_CTRL, OS_ALT,  OS_CMD,  XXXXXXX,                   KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_DEL,
+        KC_ESC,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_ENT,
                                    _______, _______,                   _______, _______
     ),
     
     [_NUM] = LAYOUT_bov34(
-        QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, KC_VOLU,                   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,
-        OS_SHFT, OS_CTRL, OS_ALT,  OS_CMD,  KC_VOLD,                   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,
-        OSTG,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   KC_F11,  KC_F12,  XXXXXXX, XXXXXXX, XXXXXXX,
+        _______, KC_7,    KC_8,    KC_9,    KC_COMM,                   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,
+        XXXXXXX, KC_4,    KC_5,    KC_6,    KC_DOT,                    KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,
+        _______, KC_1,    KC_2,    KC_3,    KC_0,                      KC_F11,  KC_F12,  XXXXXXX, OSTG,    QK_BOOT,
                                    _______, _______,                   _______, _______
     )
 

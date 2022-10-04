@@ -1,1 +1,1 @@
-# Userspace 34 key kaymap
+# Userspace 34 key keymap
