@@ -10,8 +10,6 @@ ln -sf "$cwd/users/bov48/" "$cwd/../qmk_firmware/users/"
 ln -sf "$cwd/keyboards/microdox/keymaps/bov34/" "$cwd/../qmk_firmware/keyboards/boardsource/microdox/keymaps/"
 
 # Boardsource Technik
-rm "$cwd/../qmk_firmware/keyboards/boardsource/technik_o/keymaps/bov34"
-rm "$cwd/../qmk_firmware/keyboards/boardsource/technik_o/keymaps/bov48"
 ln -sf "$cwd/keyboards/technik/keymaps/bov34/" "$cwd/../qmk_firmware/keyboards/boardsource/technik_o/keymaps/"
 ln -sf "$cwd/keyboards/technik/keymaps/bov48/" "$cwd/../qmk_firmware/keyboards/boardsource/technik_o/keymaps/"
 
