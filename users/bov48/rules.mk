@@ -1,5 +1,5 @@
 # Fix after QMK Breaking Changes 2022 August 27: https://github.com/qmk/qmk_firmware/pull/17559/files
-INTROSPECTION_KEYMAP_C = bov34.c
+INTROSPECTION_KEYMAP_C = bov48.c
 # File with keymap should not be in SRC
 #SRC += bov34.c
 
