@@ -1,5 +1,7 @@
 #include QMK_KEYBOARD_H
+#include "oneshot.h"
 #include "defines_danish.h"
+
 
 // Define keymap layers
 enum layers {
@@ -28,20 +30,26 @@ enum keycodes {
     CX_PSTE,
 
     OSTG,  // Toggle OS layout
+
+    OS_SHFT,  // Oneshot keys
+    OS_CTRL,
+    OS_ALT,
+    OS_CMD,
+
     NEW_SAFE_RANGE
 };
 
 
 // One Shot Modifiers 
-#define OS_SHFT OSM(MOD_LSFT)
-#define OS_CTRL OSM(MOD_LCTL)
-#define OS_ALT OSM(MOD_LALT)
-#define OS_CMD OSM(MOD_LGUI)
+#define OSM_SFT OSM(MOD_LSFT)
+// #define OS_CTRL OSM(MOD_LCTL)
+// #define OS_ALT OSM(MOD_LALT)
+// #define OS_CMD OSM(MOD_LGUI)
 
 
 // Layer change
+#define LA_NAV TT(_NAV)
 #define LA_SYM MO(_SYM)
-#define LA_NAV MO(_NAV)
 
 
 // User config 
@@ -69,7 +77,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
         KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,    KC_J,    KC_K,    KC_L,    DK_SCLN,
         KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                      KC_N,    KC_M,    KC_COMM, KC_DOT,  DK_SLSH,
-                                   LA_NAV,  OS_SHFT,                   KC_SPC,  LA_SYM   
+                                   LA_NAV,  OSM_SFT,                   KC_SPC,  LA_SYM   
     ),
 
     [_SYM] = LAYOUT_bov34(
@@ -82,14 +90,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_NAV] = LAYOUT_bov34(
         KC_TAB,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   KC_PGUP, KC_HOME, KC_UP,   KC_END,  KC_BSPC,
         OS_SHFT, OS_CTRL, OS_ALT,  OS_CMD,  XXXXXXX,                   KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_DEL,
-        KC_ESC,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_ENT,
+        KC_ESC,  CX_CUT,  CX_COPY, CX_PSTE, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_ENT,
                                    _______, _______,                   _______, _______
     ),
     
     [_NUM] = LAYOUT_bov34(
-        _______, KC_7,    KC_8,    KC_9,    KC_COMM,                   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,
+        KC_TAB,  KC_7,    KC_8,    KC_9,    KC_COMM,                   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,
         XXXXXXX, KC_4,    KC_5,    KC_6,    KC_DOT,                    KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,
-        _______, KC_1,    KC_2,    KC_3,    KC_0,                      KC_F11,  KC_F12,  XXXXXXX, OSTG,    QK_BOOT,
+        KC_ESC,  KC_1,    KC_2,    KC_3,    KC_0,                      KC_F11,  KC_F12,  XXXXXXX, OSTG,    KC_ENT,
                                    _______, _______,                   _______, _______
     )
 
@@ -116,7 +124,57 @@ const key_override_t **key_overrides = (const key_override_t *[]){
 };
 
 
+
+// Callum oneshot
+bool is_oneshot_cancel_key(uint16_t keycode) {
+    switch (keycode) {
+    case LA_SYM:
+    case LA_NAV:
+        return true;
+    default:
+        return false;
+    }
+}
+
+bool is_oneshot_ignored_key(uint16_t keycode) {
+    switch (keycode) {
+    case LA_SYM:
+    case LA_NAV:
+    case KC_LSFT:
+    case OS_SHFT:
+    case OS_CTRL:
+    case OS_ALT:
+    case OS_CMD:
+        return true;
+    default:
+        return false;
+    }
+}
+
+oneshot_state os_shft_state = os_up_unqueued;
+oneshot_state os_ctrl_state = os_up_unqueued;
+oneshot_state os_alt_state = os_up_unqueued;
+oneshot_state os_cmd_state = os_up_unqueued;
+
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+
+    update_oneshot(
+        &os_shft_state, KC_LSFT, OS_SHFT,
+        keycode, record
+    );
+    update_oneshot(
+        &os_ctrl_state, KC_LCTL, OS_CTRL,
+        keycode, record
+    );
+    update_oneshot(
+        &os_alt_state, KC_LALT, OS_ALT,
+        keycode, record
+    );
+    update_oneshot(
+        &os_cmd_state, KC_LCMD, OS_CMD,
+        keycode, record
+    );
 
     switch (keycode) {
 
