@@ -46,7 +46,7 @@
 #define MAC_UNDO    LCMD(KC_Z)
 #define MAC_CUT     LCMD(KC_X)
 #define MAC_COPY    LCMD(KC_C)
-#define MAC_PSTE    LCMD(KC_Z)
+#define MAC_PSTE    LCMD(KC_V)
 
 
 // PC version of keycodes
@@ -62,4 +62,4 @@
 #define PC_UNDO    LCTL(KC_Z)
 #define PC_CUT     LCTL(KC_X)
 #define PC_COPY    LCTL(KC_C)
-#define PC_PSTE    LCTL(KC_Z)
+#define PC_PSTE    LCTL(KC_V)
