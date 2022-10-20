@@ -35,8 +35,23 @@ enum keycodes {
     OS_CTRL,
     OS_ALT,
     OS_CMD,
+    OS_CNCL,
+
+    RPT,   // Repeat key
 
     NEW_SAFE_RANGE
+};
+
+// Combos
+enum combo_events {
+  HOME_RESET,
+  COMBO_LENGTH
+};
+uint16_t COMBO_LEN = COMBO_LENGTH; // remove the COMBO_COUNT define and use this instead!
+
+const uint16_t PROGMEM reset_combo[] = {KC_S, KC_D, KC_F, KC_J, KC_K, KC_L, COMBO_END};
+combo_t key_combos[] = {
+  [HOME_RESET] = COMBO(reset_combo, QK_BOOT),
 };
 
 
@@ -88,16 +103,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_NAV] = LAYOUT_bov34(
-        KC_TAB,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   KC_PGUP, KC_HOME, KC_UP,   KC_END,  KC_BSPC,
-        OS_SHFT, OS_CTRL, OS_ALT,  OS_CMD,  XXXXXXX,                   KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_DEL,
-        KC_ESC,  CX_CUT,  CX_COPY, CX_PSTE, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_ENT,
+        KC_TAB,  XXXXXXX, XXXXXXX, RPT,     XXXXXXX,                   KC_PGUP, KC_HOME, KC_UP,   KC_END,  KC_BSPC,
+        OS_SHFT, OS_CTRL, OS_ALT,  OS_CMD,  OS_CNCL,                   KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_DEL,
+        KC_ESC,  CX_CUT,  CX_COPY, CX_PSTE, XXXXXXX,                   KC_INS,  KC_PSCR, XXXXXXX, XXXXXXX, KC_ENT,
                                    _______, _______,                   _______, _______
     ),
     
     [_NUM] = LAYOUT_bov34(
-        KC_TAB,  KC_7,    KC_8,    KC_9,    KC_COMM,                   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,
-        XXXXXXX, KC_4,    KC_5,    KC_6,    KC_DOT,                    KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,
-        KC_ESC,  KC_1,    KC_2,    KC_3,    KC_0,                      KC_F11,  KC_F12,  XXXXXXX, OSTG,    KC_ENT,
+        KC_TAB,  KC_7,    KC_8,    KC_9,    XXXXXXX,                   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,
+        KC_COMM, KC_4,    KC_5,    KC_6,    XXXXXXX,                   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,
+        KC_DOT,  KC_1,    KC_2,    KC_3,    KC_0,                      KC_F11,  KC_F12,  XXXXXXX, OSTG,    KC_ENT,
                                    _______, _______,                   _______, _______
     )
 
@@ -110,7 +125,6 @@ const key_override_t shift_dot_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_D
 const key_override_t shift_quot_key_override = ko_make_basic(MOD_MASK_SHIFT, DK_QUOT, DK_DQUO);
 const key_override_t shift_scln_key_override = ko_make_basic(MOD_MASK_SHIFT, DK_SCLN, DK_COLN); 
 const key_override_t shift_slsh_key_override = ko_make_basic(MOD_MASK_SHIFT, DK_SLSH, DK_QUES); 
-//const key_override_t shift_bksp_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL); 
 
 // Key Override array
 const key_override_t **key_overrides = (const key_override_t *[]){
@@ -119,17 +133,14 @@ const key_override_t **key_overrides = (const key_override_t *[]){
     &shift_quot_key_override,
     &shift_scln_key_override,
     &shift_slsh_key_override,
-    //&shift_bksp_key_override,
     NULL
 };
-
 
 
 // Callum oneshot
 bool is_oneshot_cancel_key(uint16_t keycode) {
     switch (keycode) {
-    case LA_SYM:
-    case LA_NAV:
+    case OS_CNCL:
         return true;
     default:
         return false;
@@ -157,6 +168,58 @@ oneshot_state os_alt_state = os_up_unqueued;
 oneshot_state os_cmd_state = os_up_unqueued;
 
 
+// Repeat key implementation
+// https://gist.github.com/NotGate/3e3d8ab81300a86522b2c2549f99b131?permalink_comment_id=4282534#gistcomment-4282534
+
+// Used to extract the basic tapping keycode from a dual-role key.
+#define GET_TAP_KC(dual_role_key) dual_role_key & 0xFF
+uint16_t last_keycode = KC_NO;
+uint8_t last_modifier = 0;
+uint16_t pressed_keycode = KC_NO;
+
+
+void process_repeat_key(uint16_t keycode, const keyrecord_t *record) {
+  if (keycode != RPT) {
+    // Early return when holding down a pure layer key
+    // to retain modifiers
+    switch (keycode) {
+      case QK_DEF_LAYER ... QK_DEF_LAYER_MAX:
+      case QK_MOMENTARY ... QK_MOMENTARY_MAX:
+      case QK_LAYER_MOD ... QK_LAYER_MOD_MAX:
+      case QK_ONE_SHOT_LAYER ... QK_ONE_SHOT_LAYER_MAX:
+      case QK_TOGGLE_LAYER ... QK_TOGGLE_LAYER_MAX:
+      case QK_TO ... QK_TO_MAX:
+      case QK_LAYER_TAP_TOGGLE ... QK_LAYER_TAP_TOGGLE_MAX:
+      case QK_MODS ... QK_MODS_MAX:
+        return;
+    }
+    if (record->event.pressed) {
+      last_modifier = get_mods() | get_oneshot_mods();
+      switch (keycode) {
+        case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
+        case QK_MOD_TAP ... QK_MOD_TAP_MAX:
+          last_keycode = GET_TAP_KC(keycode);
+          break;
+        default:
+          last_keycode = keycode;
+          break;
+        }
+    }
+  } else { // keycode == RPT
+    if (record->event.pressed) {
+      pressed_keycode = last_keycode;
+      register_mods(last_modifier);
+      register_code16(pressed_keycode);
+      unregister_mods(last_modifier);
+    } else {
+      unregister_code16(pressed_keycode);
+    }
+  }
+}
+
+
+
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     update_oneshot(
@@ -175,6 +238,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         &os_cmd_state, KC_LCMD, OS_CMD,
         keycode, record
     );
+
+    process_repeat_key(keycode, record);
 
     switch (keycode) {
 
