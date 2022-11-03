@@ -6,9 +6,9 @@
 // Define keymap layers
 enum layers {
     _BASE,
-    _SYM,
     _NAV,
-    _NUM
+    _NUM,
+    _SYM
 };
 
 // Define custom keycodes
@@ -42,17 +42,10 @@ enum keycodes {
     NEW_SAFE_RANGE
 };
 
-// Combos
-enum combo_events {
-  HOME_RESET,
-  COMBO_LENGTH
-};
-uint16_t COMBO_LEN = COMBO_LENGTH; // remove the COMBO_COUNT define and use this instead!
-
-const uint16_t PROGMEM reset_combo[] = {KC_S, KC_D, KC_F, KC_J, KC_K, KC_L, COMBO_END};
-combo_t key_combos[] = {
-  [HOME_RESET] = COMBO(reset_combo, QK_BOOT),
-};
+// Combos defined in combos.def
+#if defined(COMBO_ENABLE)
+#include "g/keymap_combo.h"
+#endif
 
 
 // One Shot Modifiers 
@@ -64,7 +57,7 @@ combo_t key_combos[] = {
 
 // Layer change
 #define LA_NAV TT(_NAV)
-#define LA_SYM MO(_SYM)
+#define LA_NUM TT(_NUM)
 
 
 // User config 
@@ -92,28 +85,28 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
         KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,    KC_J,    KC_K,    KC_L,    DK_SCLN,
         KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                      KC_N,    KC_M,    KC_COMM, KC_DOT,  DK_SLSH,
-                                   LA_NAV,  OSM_SFT,                   KC_SPC,  LA_SYM   
-    ),
-
-    [_SYM] = LAYOUT_bov34(
-        DK_EXLM, CX_AT,   DK_HASH, CX_DLR,  DK_PERC,                   DK_LPRN, DK_RPRN, DK_CIRC, XXXXXXX, DK_TILD,
-        DK_AMPR, DK_ASTR, DK_UNDS, DK_QUOT, DK_DQUO,                   CX_LCBR, CX_RCBR, DK_DIAE, DK_ACUT, DK_GRV,
-        CX_PIPE, DK_PLUS, DK_MINS, DK_EQL,  CX_BSLS,                   DK_LBRC, DK_RBRC, DK_AE,   DK_OE,   DK_AA,
-                                   _______, _______,                   _______, _______
+                                   LA_NAV,  KC_SPC,                    OSM_SFT, LA_NUM   
     ),
 
     [_NAV] = LAYOUT_bov34(
-        KC_TAB,  XXXXXXX, XXXXXXX, RPT,     XXXXXXX,                   KC_PGUP, KC_HOME, KC_UP,   KC_END,  KC_BSPC,
-        OS_SHFT, OS_CTRL, OS_ALT,  OS_CMD,  OS_CNCL,                   KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_DEL,
-        KC_ESC,  CX_CUT,  CX_COPY, CX_PSTE, XXXXXXX,                   KC_INS,  KC_PSCR, XXXXXXX, XXXXXXX, KC_ENT,
-                                   _______, _______,                   _______, _______
+        KC_ESC,  XXXXXXX, XXXXXXX, RPT,     XXXXXXX,                   KC_PGUP, KC_HOME, KC_UP,   KC_END,  KC_BSPC,
+        OS_SHFT, OS_CTRL, OS_ALT,  OS_CMD,  XXXXXXX,                   KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_DEL,
+        CX_UNDO, CX_CUT,  CX_COPY, CX_PSTE, XXXXXXX,                   KC_TAB,  DK_AE,   DK_OE,   DK_AA,   XXXXXXX,
+                                   _______, XXXXXXX,                   KC_BSPC, _______
     ),
     
     [_NUM] = LAYOUT_bov34(
-        KC_TAB,  KC_7,    KC_8,    KC_9,    XXXXXXX,                   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,
-        KC_COMM, KC_4,    KC_5,    KC_6,    XXXXXXX,                   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,
-        KC_DOT,  KC_1,    KC_2,    KC_3,    KC_0,                      KC_F11,  KC_F12,  XXXXXXX, OSTG,    KC_ENT,
-                                   _______, _______,                   _______, _______
+        KC_F11,  KC_7,    KC_8,    KC_9,    DK_MINS,                   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,
+        KC_F12,  KC_4,    KC_5,    KC_6,    KC_COMM,                   XXXXXXX, OS_CMD,  OS_ALT,  OS_CTRL, OS_SHFT,
+        KC_TAB,  KC_1,    KC_2,    KC_3,    KC_DOT,                    KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,
+                                   _______, KC_0,                      XXXXXXX, _______
+    ),
+
+    [_SYM] = LAYOUT_bov34(
+        DK_EXLM, CX_AT,   DK_HASH, CX_DLR,  DK_PERC,                   XXXXXXX, DK_LPRN, DK_RPRN, DK_CIRC, DK_TILD,
+        DK_AMPR, DK_ASTR, DK_UNDS, DK_QUOT, DK_DQUO,                   XXXXXXX, CX_LCBR, CX_RCBR, DK_ACUT, DK_GRV,
+        CX_PIPE, DK_PLUS, DK_MINS, DK_EQL,  CX_BSLS,                   XXXXXXX, DK_LBRC, DK_RBRC, DK_DIAE, XXXXXXX,
+                                   _______, XXXXXXX,                   XXXXXXX, _______
     )
 
 };
@@ -140,7 +133,8 @@ const key_override_t **key_overrides = (const key_override_t *[]){
 // Callum oneshot
 bool is_oneshot_cancel_key(uint16_t keycode) {
     switch (keycode) {
-    case OS_CNCL:
+    case LA_NAV:
+    case LA_NUM:
         return true;
     default:
         return false;
@@ -149,8 +143,9 @@ bool is_oneshot_cancel_key(uint16_t keycode) {
 
 bool is_oneshot_ignored_key(uint16_t keycode) {
     switch (keycode) {
-    case LA_SYM:
     case LA_NAV:
+    case LA_NUM:
+    case OSM_SFT:
     case KC_LSFT:
     case OS_SHFT:
     case OS_CTRL:
@@ -332,7 +327,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
         break;
-                case CX_COPY:
+        case CX_COPY:
             if(record->event.pressed) {
                 register_code16((user_config.macos) ? MAC_COPY : PC_COPY);
             } else {
@@ -340,7 +335,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
         break;
-                case CX_PSTE:
+        case CX_PSTE:
             if(record->event.pressed) {
                 register_code16((user_config.macos) ? MAC_PSTE : PC_PSTE);
             } else {
@@ -356,5 +351,5 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-    return update_tri_layer_state(state, _SYM, _NAV, _NUM);
+    return update_tri_layer_state(state, _NAV, _NUM, _SYM);
 }
