@@ -43,10 +43,12 @@
 #define MAC_PND    LALT(KC_4)         // £
 #define MAC_EURO   LSFT(KC_4)         // €
 
-#define MAC_UNDO    LCMD(KC_Z)
-#define MAC_CUT     LCMD(KC_X)
-#define MAC_COPY    LCMD(KC_C)
-#define MAC_PSTE    LCMD(KC_V)
+#define MAC_UNDO   LCMD(KC_Z)
+#define MAC_CUT    LCMD(KC_X)
+#define MAC_COPY   LCMD(KC_C)
+#define MAC_PSTE   LCMD(KC_V)
+
+#define LOCK       LCTL(LGUI(KC_Q))   // lock macOS
 
 
 // PC version of keycodes
@@ -63,3 +65,5 @@
 #define PC_CUT     LCTL(KC_X)
 #define PC_COPY    LCTL(KC_C)
 #define PC_PSTE    LCTL(KC_V)
+
+#define LOCK       LGUI(KC_L)         // lock Windows

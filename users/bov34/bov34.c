@@ -29,6 +29,8 @@ enum keycodes {
     CX_COPY,
     CX_PSTE,
 
+    CX_LOCK,
+
     OSTG,  // Toggle OS layout
 
     OS_SHFT,  // Oneshot keys
@@ -89,9 +91,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_NAV] = LAYOUT_bov34(
-        KC_ESC,  XXXXXXX, XXXXXXX, RPT,     XXXXXXX,                   KC_PGUP, KC_HOME, KC_UP,   KC_END,  KC_BSPC,
-        OS_SHFT, OS_CTRL, OS_ALT,  OS_CMD,  XXXXXXX,                   KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_DEL,
-        CX_UNDO, CX_CUT,  CX_COPY, CX_PSTE, XXXXXXX,                   KC_TAB,  DK_AE,   DK_OE,   DK_AA,   XXXXXXX,
+        KC_ESC,  XXXXXXX, XXXXXXX, RPT,     KC_VOLU,                   KC_PGUP, KC_HOME, KC_UP,   KC_END,  KC_BSPC,
+        OS_SHFT, OS_CTRL, OS_ALT,  OS_CMD,  KC_VOLD,                   KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_DEL,
+        CX_UNDO, CX_CUT,  CX_COPY, CX_PSTE, CX_LOCK,                   KC_TAB,  DK_AE,   DK_OE,   DK_AA,   XXXXXXX,
                                    _______, XXXXXXX,                   KC_BSPC, _______
     ),
     
