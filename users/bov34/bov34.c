@@ -58,9 +58,11 @@ enum keycodes {
 
 
 // Layer change
-#define LA_NAV TT(_NAV)
-#define LA_NUM TT(_NUM)
-
+//#define LA_NAV TT(_NAV)
+//#define LA_NUM TT(_NUM)
+#define LA_NAV LT(_NAV,KC_TAB)
+#define LA_NUM LT(_NUM,KC_ENT)
+#define LA_SYM LT(_SYM,KC_SPC)
 
 // User config 
 typedef union {
@@ -87,12 +89,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
         KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,    KC_J,    KC_K,    KC_L,    DK_SCLN,
         KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                      KC_N,    KC_M,    KC_COMM, KC_DOT,  DK_SLSH,
-                                   LA_NAV,  KC_SPC,                    OSM_SFT, LA_NUM   
+                                   LA_NAV,  OSM_SFT,                   LA_SYM,  LA_NUM   
     ),
 
     [_NAV] = LAYOUT_bov34(
-        KC_ESC,  XXXXXXX, XXXXXXX, RPT,     KC_VOLU,                   KC_PGUP, KC_HOME, KC_UP,   KC_END,  KC_BSPC,
-        OS_SHFT, OS_CTRL, OS_ALT,  OS_CMD,  KC_VOLD,                   KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_DEL,
+        KC_ESC,  XXXXXXX, XXXXXXX, RPT,     KC_VOLU,                   KC_PGUP, KC_HOME, KC_UP,   KC_END,  XXXXXXX,
+        OS_SHFT, OS_CTRL, OS_ALT,  OS_CMD,  KC_VOLD,                   KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_ENT,
         CX_UNDO, CX_CUT,  CX_COPY, CX_PSTE, CX_LOCK,                   KC_TAB,  DK_AE,   DK_OE,   DK_AA,   XXXXXXX,
                                    _______, XXXXXXX,                   KC_BSPC, _______
     ),
@@ -137,6 +139,7 @@ bool is_oneshot_cancel_key(uint16_t keycode) {
     switch (keycode) {
     case LA_NAV:
     case LA_NUM:
+    case LA_SYM:
         return true;
     default:
         return false;
@@ -147,6 +150,7 @@ bool is_oneshot_ignored_key(uint16_t keycode) {
     switch (keycode) {
     case LA_NAV:
     case LA_NUM:
+    case LA_SYM:
     case OSM_SFT:
     case KC_LSFT:
     case OS_SHFT:
@@ -345,6 +349,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
         break;
+        case CX_LOCK:
+            if(record->event.pressed) {
+                register_code16((user_config.macos) ? MAC_LOCK : PC_LOCK);
+            } else {
+                unregister_code16((user_config.macos) ? MAC_LOCK : PC_LOCK);
+            }
+            return false;
+        break;
 
     }
 
@@ -352,6 +364,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 
-layer_state_t layer_state_set_user(layer_state_t state) {
-    return update_tri_layer_state(state, _NAV, _NUM, _SYM);
-}
+// layer_state_t layer_state_set_user(layer_state_t state) {
+//     return update_tri_layer_state(state, _NAV, _NUM, _SYM);
+// }
+
