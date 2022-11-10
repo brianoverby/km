@@ -1,5 +1,7 @@
 #include "oneshot.h"
 
+// From: https://github.com/callum-oakley/
+
 void update_oneshot(
     oneshot_state *state,
     uint16_t mod,

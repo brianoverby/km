@@ -1,5 +1,6 @@
 #include QMK_KEYBOARD_H
 #include "oneshot.h"
+#include "swapper.h"
 #include "defines_danish.h"
 
 
@@ -8,38 +9,39 @@ enum layers {
     _BASE,
     _NAV,
     _NUM,
-    _SYM
+    _SYM,
+    _SYS
 };
 
 // Define custom keycodes
 enum keycodes {
     // keys that differ between Mac and PC
     // keycodes defined in defines_danish.h
-    CX_AT = SAFE_RANGE,
-    CX_DLR,
-    CX_BSLS,
-    CX_PIPE,
-    CX_LCBR,
-    CX_RCBR,
-    CX_PND,
-    CX_EURO,
+    AT = SAFE_RANGE,
+    DLR,
+    BSLS,
+    PIPE,
+    LCBR,
+    RCBR,
+    PND,
+    EURO,
 
-    CX_UNDO,
-    CX_CUT,
-    CX_COPY,
-    CX_PSTE,
+    UNDO,
+    CUT,
+    COPY,
+    PSTE,
 
-    CX_LOCK,
+    LOCK,
+    SW_WIN,
 
     OSTG,  // Toggle OS layout
+    OSWIN,
+    OSMAC,
 
     OS_SHFT,  // Oneshot keys
     OS_CTRL,
     OS_ALT,
     OS_CMD,
-    OS_CNCL,
-
-    RPT,   // Repeat key
 
     NEW_SAFE_RANGE
 };
@@ -58,9 +60,9 @@ enum keycodes {
 
 
 // Layer change
-//#define LA_NAV TT(_NAV)
+#define LA_NAV TT(_NAV)
 //#define LA_NUM TT(_NUM)
-#define LA_NAV LT(_NAV,KC_TAB)
+//#define LA_NAV LT(_NAV,KC_TAB)
 #define LA_NUM LT(_NUM,KC_ENT)
 #define LA_SYM LT(_SYM,KC_SPC)
 
@@ -93,9 +95,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_NAV] = LAYOUT_bov34(
-        KC_ESC,  XXXXXXX, XXXXXXX, RPT,     KC_VOLU,                   KC_PGUP, KC_HOME, KC_UP,   KC_END,  XXXXXXX,
-        OS_SHFT, OS_CTRL, OS_ALT,  OS_CMD,  KC_VOLD,                   KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_ENT,
-        CX_UNDO, CX_CUT,  CX_COPY, CX_PSTE, CX_LOCK,                   KC_TAB,  DK_AE,   DK_OE,   DK_AA,   XXXXXXX,
+        KC_ESC,  XXXXXXX, XXXXXXX, SW_WIN,  KC_VOLU,                   KC_PGUP, KC_HOME, KC_UP,   KC_END,  XXXXXXX,
+        OS_SHFT, OS_CTRL, OS_ALT,  OS_CMD,  KC_VOLD,                   KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX,
+        UNDO,    CUT,     COPY,    PSTE,    LOCK,                      KC_TAB,  DK_AE,   DK_OE,   DK_AA,   XXXXXXX,
                                    _______, XXXXXXX,                   KC_BSPC, _______
     ),
     
@@ -107,9 +109,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_SYM] = LAYOUT_bov34(
-        DK_EXLM, CX_AT,   DK_HASH, CX_DLR,  DK_PERC,                   XXXXXXX, DK_LPRN, DK_RPRN, DK_CIRC, DK_TILD,
-        DK_AMPR, DK_ASTR, DK_UNDS, DK_QUOT, DK_DQUO,                   XXXXXXX, CX_LCBR, CX_RCBR, DK_ACUT, DK_GRV,
-        CX_PIPE, DK_PLUS, DK_MINS, DK_EQL,  CX_BSLS,                   XXXXXXX, DK_LBRC, DK_RBRC, DK_DIAE, XXXXXXX,
+        DK_EXLM, AT,      DK_HASH, DLR,     DK_PERC,                   XXXXXXX, DK_LPRN, DK_RPRN, DK_CIRC, DK_TILD,
+        DK_AMPR, DK_ASTR, DK_UNDS, DK_QUOT, DK_DQUO,                   XXXXXXX, LCBR,    RCBR,    DK_ACUT, DK_GRV,
+        PIPE,    DK_PLUS, DK_MINS, DK_EQL,  BSLS,                      XXXXXXX, DK_LBRC, DK_RBRC, DK_DIAE, XXXXXXX,
+                                   _______, XXXXXXX,                   XXXXXXX, _______
+    ),
+
+    [_SYS] = LAYOUT_bov34(
+        XXXXXXX, OSWIN,   XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, OSMAC,   XXXXXXX, XXXXXXX, XXXXXXX,
                                    _______, XXXXXXX,                   XXXXXXX, _______
     )
 
@@ -137,31 +146,32 @@ const key_override_t **key_overrides = (const key_override_t *[]){
 // Callum oneshot
 bool is_oneshot_cancel_key(uint16_t keycode) {
     switch (keycode) {
-    case LA_NAV:
-    case LA_NUM:
-    case LA_SYM:
-        return true;
-    default:
-        return false;
+        case LA_NAV:
+        case LA_NUM:
+            return true;
+        default:
+            return false;
     }
 }
 
 bool is_oneshot_ignored_key(uint16_t keycode) {
     switch (keycode) {
-    case LA_NAV:
-    case LA_NUM:
-    case LA_SYM:
-    case OSM_SFT:
-    case KC_LSFT:
-    case OS_SHFT:
-    case OS_CTRL:
-    case OS_ALT:
-    case OS_CMD:
-        return true;
-    default:
-        return false;
+        case LA_NAV:
+        case LA_NUM:
+        case LA_SYM:
+        case OSM_SFT:
+        case KC_LSFT:
+        case OS_SHFT:
+        case OS_CTRL:
+        case OS_ALT:
+        case OS_CMD:
+            return true;
+        default:
+            return false;
     }
 }
+
+bool sw_win_active = false;
 
 oneshot_state os_shft_state = os_up_unqueued;
 oneshot_state os_ctrl_state = os_up_unqueued;
@@ -169,59 +179,21 @@ oneshot_state os_alt_state = os_up_unqueued;
 oneshot_state os_cmd_state = os_up_unqueued;
 
 
-// Repeat key implementation
-// https://gist.github.com/NotGate/3e3d8ab81300a86522b2c2549f99b131?permalink_comment_id=4282534#gistcomment-4282534
 
-// Used to extract the basic tapping keycode from a dual-role key.
-#define GET_TAP_KC(dual_role_key) dual_role_key & 0xFF
-uint16_t last_keycode = KC_NO;
-uint8_t last_modifier = 0;
-uint16_t pressed_keycode = KC_NO;
-
-
-void process_repeat_key(uint16_t keycode, const keyrecord_t *record) {
-  if (keycode != RPT) {
-    // Early return when holding down a pure layer key
-    // to retain modifiers
-    switch (keycode) {
-      case QK_DEF_LAYER ... QK_DEF_LAYER_MAX:
-      case QK_MOMENTARY ... QK_MOMENTARY_MAX:
-      case QK_LAYER_MOD ... QK_LAYER_MOD_MAX:
-      case QK_ONE_SHOT_LAYER ... QK_ONE_SHOT_LAYER_MAX:
-      case QK_TOGGLE_LAYER ... QK_TOGGLE_LAYER_MAX:
-      case QK_TO ... QK_TO_MAX:
-      case QK_LAYER_TAP_TOGGLE ... QK_LAYER_TAP_TOGGLE_MAX:
-      case QK_MODS ... QK_MODS_MAX:
-        return;
-    }
-    if (record->event.pressed) {
-      last_modifier = get_mods() | get_oneshot_mods();
-      switch (keycode) {
-        case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
-        case QK_MOD_TAP ... QK_MOD_TAP_MAX:
-          last_keycode = GET_TAP_KC(keycode);
-          break;
-        default:
-          last_keycode = keycode;
-          break;
-        }
-    }
-  } else { // keycode == RPT
-    if (record->event.pressed) {
-      pressed_keycode = last_keycode;
-      register_mods(last_modifier);
-      register_code16(pressed_keycode);
-      unregister_mods(last_modifier);
-    } else {
-      unregister_code16(pressed_keycode);
-    }
-  }
+layer_state_t layer_state_set_user(layer_state_t state) {
+    return update_tri_layer_state(state, _NAV, _NUM, _SYS);
 }
 
 
-
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+
+    // Check for Windows or macOS before updating swapper
+    uint16_t WINSW_KEY = (user_config.macos) ? KC_LCMD : KC_LALT;
+
+    update_swapper(
+            &sw_win_active, WINSW_KEY, KC_TAB, SW_WIN,
+            keycode, record
+        );
 
     update_oneshot(
         &os_shft_state, KC_LSFT, OS_SHFT,
@@ -240,8 +212,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         keycode, record
     );
 
-    process_repeat_key(keycode, record);
-
     switch (keycode) {
 
         case OSTG: // OS toggle
@@ -251,9 +221,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
         break;
+        case OSWIN: // Windows
+            if (record->event.pressed) {
+                user_config.macos = 0; 
+                eeconfig_update_user(user_config.raw); // Writes to EEPROM!
+            }
+            return false;
+        break;
+        case OSMAC: // macOS
+            if (record->event.pressed) {
+                user_config.macos = 1;
+                eeconfig_update_user(user_config.raw); // Writes to EEPROM!
+            }
+            return false;
+        break;
 
         // Handle keycodes that differ between Mac and PC
-        case CX_AT:
+        case AT:
             if(record->event.pressed) {
                 register_code16((user_config.macos) ? MAC_AT : PC_AT);
             } else {
@@ -261,7 +245,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
         break;
-        case CX_DLR:
+        case DLR:
             if(record->event.pressed) {
                 register_code16((user_config.macos) ? MAC_DLR : PC_DLR);
             } else {
@@ -269,7 +253,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
         break;
-        case CX_BSLS:
+        case BSLS:
             if(record->event.pressed) {
                 register_code16((user_config.macos) ? MAC_BSLS : PC_BSLS);
             } else {
@@ -277,7 +261,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
         break;
-        case CX_PIPE:
+        case PIPE:
             if(record->event.pressed) {
                 register_code16((user_config.macos) ? MAC_PIPE : PC_PIPE);
             } else {
@@ -285,7 +269,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
         break;
-        case CX_LCBR:
+        case LCBR:
             if(record->event.pressed) {
                 register_code16((user_config.macos) ? MAC_LCBR : PC_LCBR);
             } else {
@@ -293,7 +277,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
         break;
-        case CX_RCBR:
+        case RCBR:
             if(record->event.pressed) {
                 register_code16((user_config.macos) ? MAC_RCBR : PC_RCBR);
             } else {
@@ -301,7 +285,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
         break;
-        case CX_PND:
+        case PND:
             if(record->event.pressed) {
                 register_code16((user_config.macos) ? MAC_PND : PC_PND);
             } else {
@@ -309,7 +293,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
         break;
-        case CX_EURO:
+        case EURO:
             if(record->event.pressed) {
                 register_code16((user_config.macos) ? MAC_EURO : PC_EURO);
             } else {
@@ -317,7 +301,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
         break;
-        case CX_UNDO:
+        case UNDO:
             if(record->event.pressed) {
                 register_code16((user_config.macos) ? MAC_UNDO : PC_UNDO);
             } else {
@@ -325,7 +309,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
         break;
-        case CX_CUT:
+        case CUT:
             if(record->event.pressed) {
                 register_code16((user_config.macos) ? MAC_CUT : PC_CUT);
             } else {
@@ -333,7 +317,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
         break;
-        case CX_COPY:
+        case COPY:
             if(record->event.pressed) {
                 register_code16((user_config.macos) ? MAC_COPY : PC_COPY);
             } else {
@@ -341,7 +325,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
         break;
-        case CX_PSTE:
+        case PSTE:
             if(record->event.pressed) {
                 register_code16((user_config.macos) ? MAC_PSTE : PC_PSTE);
             } else {
@@ -349,7 +333,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
         break;
-        case CX_LOCK:
+        case LOCK:
             if(record->event.pressed) {
                 register_code16((user_config.macos) ? MAC_LOCK : PC_LOCK);
             } else {
@@ -362,9 +346,3 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     return true;
 }
-
-
-// layer_state_t layer_state_set_user(layer_state_t state) {
-//     return update_tri_layer_state(state, _NAV, _NUM, _SYM);
-// }
-

@@ -1,5 +1,5 @@
 
-<svg width="730" height="1061" viewBox="0 0 730 1061" xmlns="http://www.w3.org/2000/svg">
+<svg width="730" height="1320" viewBox="0 0 730 1320" xmlns="http://www.w3.org/2000/svg">
 <style>
 svg {
     font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
@@ -90,11 +90,13 @@ text {
  <rect x="224" y="207" width="60" height="50" rx="5" ry="5" />
  <text x="254" y="232">nav</text>
  <rect x="288" y="207" width="60" height="50" rx="5" ry="5" />
- <text x="318" y="232">space</text>
+ <text x="318" y="232">shift</text>
  <rect x="382" y="207" width="60" height="50" rx="5" ry="5" />
- <text x="412" y="232">shift</text>
+ <text x="412" y="224">space</text>
+ <text x="412" y="240">sym</text>
  <rect x="446" y="207" width="60" height="50" rx="5" ry="5" />
- <text x="476" y="232">num</text>
+ <text x="476" y="224">enter</text>
+ <text x="476" y="240">num</text>
  
  <text x="32" y="284" class="layer">nav</text>
  <rect x="32" y="304" width="60" height="50" rx="5" ry="5" />
@@ -104,9 +106,10 @@ text {
  <rect x="160" y="304" width="60" height="50" rx="5" ry="5" />
  <text x="190" y="329"></text>
  <rect x="224" y="304" width="60" height="50" rx="5" ry="5" />
- <text x="254" y="329">repeat</text>
+ <text x="254" y="321">swap</text>
+ <text x="254" y="337">win</text>
  <rect x="288" y="304" width="60" height="50" rx="5" ry="5" />
- <text x="318" y="329"></text>
+ <text x="318" y="329">vol+</text>
  <rect x="32" y="358" width="60" height="50" rx="5" ry="5" />
  <text x="62" y="383">shift</text>
  <rect x="96" y="358" width="60" height="50" rx="5" ry="5" />
@@ -116,7 +119,7 @@ text {
  <rect x="224" y="358" width="60" height="50" rx="5" ry="5" />
  <text x="254" y="383">cmd</text>
  <rect x="288" y="358" width="60" height="50" rx="5" ry="5" />
- <text x="318" y="383"></text>
+ <text x="318" y="383">vol-</text>
  <rect x="32" y="412" width="60" height="50" rx="5" ry="5" />
  <text x="62" y="437">undo</text>
  <rect x="96" y="412" width="60" height="50" rx="5" ry="5" />
@@ -126,7 +129,7 @@ text {
  <rect x="224" y="412" width="60" height="50" rx="5" ry="5" />
  <text x="254" y="437">paste</text>
  <rect x="288" y="412" width="60" height="50" rx="5" ry="5" />
- <text x="318" y="437"></text>
+ <text x="318" y="437">lock</text>
  <rect x="382" y="304" width="60" height="50" rx="5" ry="5" />
  <text x="412" y="329">pgup</text>
  <rect x="446" y="304" width="60" height="50" rx="5" ry="5" />
@@ -146,7 +149,7 @@ text {
  <rect x="574" y="358" width="60" height="50" rx="5" ry="5" />
  <text x="604" y="383">right</text>
  <rect x="638" y="358" width="60" height="50" rx="5" ry="5" />
- <text x="668" y="383">enter</text>
+ <text x="668" y="383"></text>
  <rect x="382" y="412" width="60" height="50" rx="5" ry="5" />
  <text x="412" y="437">tab</text>
  <rect x="446" y="412" width="60" height="50" rx="5" ry="5" />
@@ -164,7 +167,8 @@ text {
  <rect x="382" y="466" width="60" height="50" rx="5" ry="5" />
  <text x="412" y="491">bksp</text>
  <rect x="446" y="466" width="60" height="50" rx="5" ry="5" />
- <text x="476" y="491">num</text>
+ <text x="476" y="483">enter</text>
+ <text x="476" y="499">num</text>
  
  <text x="32" y="543" class="layer">num</text>
  <rect x="32" y="563" width="60" height="50" rx="5" ry="5" />
@@ -297,14 +301,85 @@ text {
  <text x="604" y="955">&#168;</text>
  <rect x="638" y="930" width="60" height="50" rx="5" ry="5" />
  <text x="668" y="955"></text>
- <rect x="224" y="984" width="60" height="50" class="hold" rx="5" ry="5" />
+ <rect x="224" y="984" width="60" height="50" rx="5" ry="5" />
  <text x="254" y="1009">nav</text>
  <rect x="288" y="984" width="60" height="50" rx="5" ry="5" />
  <text x="318" y="1009"></text>
- <rect x="382" y="984" width="60" height="50" rx="5" ry="5" />
- <text x="412" y="1009"></text>
- <rect x="446" y="984" width="60" height="50" class="hold" rx="5" ry="5" />
- <text x="476" y="1009">num</text>
+ <rect x="382" y="984" width="60" height="50" class="hold" rx="5" ry="5" />
+ <text x="412" y="1009">sym</text>
+ <rect x="446" y="984" width="60" height="50" rx="5" ry="5" />
+ <text x="476" y="1001">enter</text>
+ <text x="476" y="1017">num</text>
+ 
+ <text x="32" y="1061" class="layer">sys</text>
+ <rect x="32" y="1081" width="60" height="50" rx="5" ry="5" />
+ <text x="62" y="1106"></text>
+ <rect x="96" y="1081" width="60" height="50" rx="5" ry="5" />
+ <text x="126" y="1106">OS:WIN</text>
+ <rect x="160" y="1081" width="60" height="50" rx="5" ry="5" />
+ <text x="190" y="1106"></text>
+ <rect x="224" y="1081" width="60" height="50" rx="5" ry="5" />
+ <text x="254" y="1106"></text>
+ <rect x="288" y="1081" width="60" height="50" rx="5" ry="5" />
+ <text x="318" y="1106"></text>
+ <rect x="32" y="1135" width="60" height="50" rx="5" ry="5" />
+ <text x="62" y="1160"></text>
+ <rect x="96" y="1135" width="60" height="50" rx="5" ry="5" />
+ <text x="126" y="1160"></text>
+ <rect x="160" y="1135" width="60" height="50" rx="5" ry="5" />
+ <text x="190" y="1160"></text>
+ <rect x="224" y="1135" width="60" height="50" rx="5" ry="5" />
+ <text x="254" y="1160"></text>
+ <rect x="288" y="1135" width="60" height="50" rx="5" ry="5" />
+ <text x="318" y="1160"></text>
+ <rect x="32" y="1189" width="60" height="50" rx="5" ry="5" />
+ <text x="62" y="1214"></text>
+ <rect x="96" y="1189" width="60" height="50" rx="5" ry="5" />
+ <text x="126" y="1214"></text>
+ <rect x="160" y="1189" width="60" height="50" rx="5" ry="5" />
+ <text x="190" y="1214"></text>
+ <rect x="224" y="1189" width="60" height="50" rx="5" ry="5" />
+ <text x="254" y="1214"></text>
+ <rect x="288" y="1189" width="60" height="50" rx="5" ry="5" />
+ <text x="318" y="1214"></text>
+ <rect x="382" y="1081" width="60" height="50" rx="5" ry="5" />
+ <text x="412" y="1106"></text>
+ <rect x="446" y="1081" width="60" height="50" rx="5" ry="5" />
+ <text x="476" y="1106"></text>
+ <rect x="510" y="1081" width="60" height="50" rx="5" ry="5" />
+ <text x="540" y="1106"></text>
+ <rect x="574" y="1081" width="60" height="50" rx="5" ry="5" />
+ <text x="604" y="1106"></text>
+ <rect x="638" y="1081" width="60" height="50" rx="5" ry="5" />
+ <text x="668" y="1106"></text>
+ <rect x="382" y="1135" width="60" height="50" rx="5" ry="5" />
+ <text x="412" y="1160"></text>
+ <rect x="446" y="1135" width="60" height="50" rx="5" ry="5" />
+ <text x="476" y="1160"></text>
+ <rect x="510" y="1135" width="60" height="50" rx="5" ry="5" />
+ <text x="540" y="1160"></text>
+ <rect x="574" y="1135" width="60" height="50" rx="5" ry="5" />
+ <text x="604" y="1160"></text>
+ <rect x="638" y="1135" width="60" height="50" rx="5" ry="5" />
+ <text x="668" y="1160"></text>
+ <rect x="382" y="1189" width="60" height="50" rx="5" ry="5" />
+ <text x="412" y="1214"></text>
+ <rect x="446" y="1189" width="60" height="50" rx="5" ry="5" />
+ <text x="476" y="1214">OS:MAC</text>
+ <rect x="510" y="1189" width="60" height="50" rx="5" ry="5" />
+ <text x="540" y="1214"></text>
+ <rect x="574" y="1189" width="60" height="50" rx="5" ry="5" />
+ <text x="604" y="1214"></text>
+ <rect x="638" y="1189" width="60" height="50" rx="5" ry="5" />
+ <text x="668" y="1214"></text>
+ <rect x="224" y="1243" width="60" height="50" class="hold" rx="5" ry="5" />
+ <text x="254" y="1268">nav</text>
+ <rect x="288" y="1243" width="60" height="50" rx="5" ry="5" />
+ <text x="318" y="1268"></text>
+ <rect x="382" y="1243" width="60" height="50" rx="5" ry="5" />
+ <text x="412" y="1268"></text>
+ <rect x="446" y="1243" width="60" height="50" class="hold" rx="5" ry="5" />
+ <text x="476" y="1268">num</text>
  
 </svg>
 

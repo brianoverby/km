@@ -2,6 +2,8 @@
 
 #include QMK_KEYBOARD_H
 
+// From: https://github.com/callum-oakley/
+
 // Represents the four states a oneshot key can be in
 typedef enum {
     os_up_unqueued,
