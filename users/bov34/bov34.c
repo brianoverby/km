@@ -1,5 +1,5 @@
 #include QMK_KEYBOARD_H
-#include "oneshot.h"
+//#include "oneshot.h"
 #include "swapper.h"
 #include "defines_danish.h"
 
@@ -58,6 +58,15 @@ enum keycodes {
 // #define OS_ALT OSM(MOD_LALT)
 // #define OS_CMD OSM(MOD_LGUI)
 
+// mod-tap
+#define SFT_A MT(MOD_LSFT, KC_A)
+#define CTL_S MT(MOD_LCTL, KC_S)
+#define ALT_D MT(MOD_LALT, KC_D)
+#define CMD_F MT(MOD_LGUI, KC_F)
+#define SFT_SM MT(MOD_RSFT, DK_SCLN)
+#define CTL_L MT(MOD_RCTL, KC_L)
+#define ALT_K MT(MOD_RALT, KC_K)
+#define CMD_J MT(MOD_RGUI, KC_J)
 
 // Layer change
 #define LA_NAV TT(_NAV)
@@ -89,7 +98,7 @@ void keyboard_post_init_user(void) {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_BASE] = LAYOUT_bov34(
         KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
-        KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,    KC_J,    KC_K,    KC_L,    DK_SCLN,
+        SFT_A,   CTL_S,   ALT_D,   CMD_F,   KC_G,                      KC_H,    CMD_J,   ALT_K,   CTL_L,   SFT_SM,
         KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                      KC_N,    KC_M,    KC_COMM, KC_DOT,  DK_SLSH,
                                    LA_NAV,  OSM_SFT,                   LA_SYM,  LA_NUM   
     ),

@@ -2,7 +2,7 @@
 INTROSPECTION_KEYMAP_C = bov34.c
 # File with keymap should not be in SRC
 #SRC += bov34.c
-SRC += oneshot.c
+#SRC += oneshot.c
 SRC += swapper.c
 VPATH += keyboards/gboards
 
