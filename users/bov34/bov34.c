@@ -1,5 +1,5 @@
 #include QMK_KEYBOARD_H
-//#include "oneshot.h"
+#include "oneshot.h"
 #include "swapper.h"
 #include "defines_danish.h"
 

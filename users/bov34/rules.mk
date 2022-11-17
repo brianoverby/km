@@ -2,7 +2,7 @@
 INTROSPECTION_KEYMAP_C = bov34.c
 # File with keymap should not be in SRC
 #SRC += bov34.c
-#SRC += oneshot.c
+SRC += oneshot.c
 SRC += swapper.c
 VPATH += keyboards/gboards
 
@@ -10,6 +10,7 @@ EXTRAKEY_ENABLE = yes
 KEY_OVERRIDE_ENABLE = yes
 TAP_DANCE_ENABLE = no
 COMBO_ENABLE = yes
+CAPS_WORD_ENABLE = yes
 
 BOOTMAGIC_ENABLE = no
 MOUSEKEY_ENABLE = no
