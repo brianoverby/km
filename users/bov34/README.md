@@ -3,4 +3,4 @@ This is my take on a 34-key layout. I made it in [QMK userspace](https://docs.qm
 
 I use [Callum style mods](https://github.com/callum-oakley/qmk_firmware/tree/master/users/callum) mods. I have tried to use [OSM](https://docs.qmk.fm/#/one_shot_keys?id=one-shot-keys) but I had some issues when using multiple modifiers together - it works better with Callum style mods. 
 
-![keymap](./keymap_3x5_2.svg)
+![keymap](./keymap.svg)

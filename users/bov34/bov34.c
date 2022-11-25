@@ -1,6 +1,6 @@
 #include QMK_KEYBOARD_H
-#include "oneshot.h"
-#include "swapper.h"
+#include "features/oneshot.h"
+#include "features/swapper.h"
 #include "defines_danish.h"
 
 
@@ -60,11 +60,12 @@ enum keycodes {
 
 
 // Layer change
-#define LA_NAV TT(_NAV)
+//#define LA_NAV TT(_NAV)
+#define LA_NAV LT(_NAV,KC_SPC)
 //#define LA_NUM TT(_NUM)
 //#define LA_NAV LT(_NAV,KC_TAB)
-#define LA_NUM LT(_NUM,KC_ENT)
-#define LA_SYM LT(_SYM,KC_SPC)
+#define LA_SYM LT(_SYM,KC_ENT)
+#define LA_NUM LT(_NUM,KC_BSPC)
 
 // User config 
 typedef union {
@@ -98,21 +99,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_ESC,  XXXXXXX, XXXXXXX, SW_WIN,  KC_VOLU,                   KC_PGUP, KC_HOME, KC_UP,   KC_END,  XXXXXXX,
         OS_SHFT, OS_CTRL, OS_ALT,  OS_CMD,  KC_VOLD,                   KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX,
         UNDO,    CUT,     COPY,    PSTE,    LOCK,                      KC_TAB,  DK_AE,   DK_OE,   DK_AA,   XXXXXXX,
-                                   _______, XXXXXXX,                   KC_BSPC, _______
+                                   _______, _______,                   _______, _______
     ),
     
     [_NUM] = LAYOUT_bov34(
         KC_F11,  KC_7,    KC_8,    KC_9,    DK_MINS,                   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,
         KC_F12,  KC_4,    KC_5,    KC_6,    KC_COMM,                   XXXXXXX, OS_CMD,  OS_ALT,  OS_CTRL, OS_SHFT,
         KC_TAB,  KC_1,    KC_2,    KC_3,    KC_DOT,                    KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,
-                                   _______, KC_0,                      XXXXXXX, _______
+                                   _______, KC_0,                      _______, _______
     ),
 
     [_SYM] = LAYOUT_bov34(
         DK_EXLM, AT,      DK_HASH, DLR,     DK_PERC,                   XXXXXXX, DK_LPRN, DK_RPRN, DK_CIRC, DK_TILD,
         DK_AMPR, DK_ASTR, DK_UNDS, DK_QUOT, DK_DQUO,                   XXXXXXX, LCBR,    RCBR,    DK_ACUT, DK_GRV,
         PIPE,    DK_PLUS, DK_MINS, DK_EQL,  BSLS,                      XXXXXXX, DK_LBRC, DK_RBRC, DK_DIAE, XXXXXXX,
-                                   _______, XXXXXXX,                   XXXXXXX, _______
+                                   _______, XXXXXXX,                   _______, _______
     ),
 
     [_SYS] = LAYOUT_bov34(
