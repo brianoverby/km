@@ -129,7 +129,7 @@ const key_override_t **key_overrides = (const key_override_t *[]){
     &backspace_delete,
     &space_underscore,
     NULL
-}
+};
 
 
 // Callum oneshot
