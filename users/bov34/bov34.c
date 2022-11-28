@@ -9,8 +9,7 @@ enum layers {
     _BASE,
     _NAV,
     _NUM,
-    _SYM,
-    _SYS
+    _SYM
 };
 
 // Define custom keycodes
@@ -32,6 +31,7 @@ enum keycodes {
     PSTE,
 
     LOCK,
+    SEARCH,
     SW_WIN,
 
     OSTG,  // Toggle OS layout
@@ -54,18 +54,10 @@ enum keycodes {
 
 // One Shot Modifiers 
 #define OSM_SFT OSM(MOD_LSFT)
-// #define OS_CTRL OSM(MOD_LCTL)
-// #define OS_ALT OSM(MOD_LALT)
-// #define OS_CMD OSM(MOD_LGUI)
-
 
 // Layer change
-//#define LA_NAV TT(_NAV)
-#define LA_NAV LT(_NAV,KC_SPC)
-//#define LA_NUM TT(_NUM)
-//#define LA_NAV LT(_NAV,KC_TAB)
-#define LA_SYM LT(_SYM,KC_ENT)
-#define LA_NUM LT(_NUM,KC_BSPC)
+#define LA_NAV MO(_NAV)
+#define LA_NUM MO(_NUM)
 
 // User config 
 typedef union {
@@ -92,56 +84,52 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
         KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,    KC_J,    KC_K,    KC_L,    DK_SCLN,
         KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                      KC_N,    KC_M,    KC_COMM, KC_DOT,  DK_SLSH,
-                                   LA_NAV,  OSM_SFT,                   LA_SYM,  LA_NUM   
+                                   LA_NAV,  OSM_SFT,                   KC_SPC,  LA_NUM   
     ),
 
     [_NAV] = LAYOUT_bov34(
-        KC_ESC,  XXXXXXX, XXXXXXX, SW_WIN,  KC_VOLU,                   KC_PGUP, KC_HOME, KC_UP,   KC_END,  XXXXXXX,
-        OS_SHFT, OS_CTRL, OS_ALT,  OS_CMD,  KC_VOLD,                   KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX,
+        KC_ESC,  XXXXXXX, XXXXXXX, SW_WIN,  XXXXXXX,                   KC_PGUP, KC_HOME, KC_UP,   KC_END,  XXXXXXX,
+        OS_SHFT, OS_CTRL, OS_ALT,  OS_CMD,  SEARCH,                    KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_ENT,
         UNDO,    CUT,     COPY,    PSTE,    LOCK,                      KC_TAB,  DK_AE,   DK_OE,   DK_AA,   XXXXXXX,
-                                   _______, _______,                   _______, _______
+                                   _______, XXXXXXX,                   KC_BSPC, _______
     ),
     
     [_NUM] = LAYOUT_bov34(
         KC_F11,  KC_7,    KC_8,    KC_9,    DK_MINS,                   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,
         KC_F12,  KC_4,    KC_5,    KC_6,    KC_COMM,                   XXXXXXX, OS_CMD,  OS_ALT,  OS_CTRL, OS_SHFT,
         KC_TAB,  KC_1,    KC_2,    KC_3,    KC_DOT,                    KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,
-                                   _______, KC_0,                      _______, _______
+                                   _______, KC_0,                      XXXXXXX, _______
     ),
 
     [_SYM] = LAYOUT_bov34(
         DK_EXLM, AT,      DK_HASH, DLR,     DK_PERC,                   XXXXXXX, DK_LPRN, DK_RPRN, DK_CIRC, DK_TILD,
         DK_AMPR, DK_ASTR, DK_UNDS, DK_QUOT, DK_DQUO,                   XXXXXXX, LCBR,    RCBR,    DK_ACUT, DK_GRV,
         PIPE,    DK_PLUS, DK_MINS, DK_EQL,  BSLS,                      XXXXXXX, DK_LBRC, DK_RBRC, DK_DIAE, XXXXXXX,
-                                   _______, XXXXXXX,                   _______, _______
-    ),
-
-    [_SYS] = LAYOUT_bov34(
-        XXXXXXX, OSWIN,   XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, OSMAC,   XXXXXXX, XXXXXXX, XXXXXXX,
                                    _______, XXXXXXX,                   XXXXXXX, _______
     )
-
 };
 
 
-// This is a hack to match US keycap legends on a Danish keyboard layout - using Key Override
-const key_override_t shift_comm_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_COMM, DK_LABK);
-const key_override_t shift_dot_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_DOT, DK_RABK);
-const key_override_t shift_quot_key_override = ko_make_basic(MOD_MASK_SHIFT, DK_QUOT, DK_DQUO);
-const key_override_t shift_scln_key_override = ko_make_basic(MOD_MASK_SHIFT, DK_SCLN, DK_COLN); 
-const key_override_t shift_slsh_key_override = ko_make_basic(MOD_MASK_SHIFT, DK_SLSH, DK_QUES); 
+// Key overrides
+const key_override_t comma_labk = ko_make_basic(MOD_MASK_SHIFT, KC_COMM, DK_LABK);
+const key_override_t dot_rabk = ko_make_basic(MOD_MASK_SHIFT, KC_DOT, DK_RABK);
+const key_override_t quote_dblquote = ko_make_basic(MOD_MASK_SHIFT, DK_QUOT, DK_DQUO);
+const key_override_t semicolon_colon = ko_make_basic(MOD_MASK_SHIFT, DK_SCLN, DK_COLN); 
+const key_override_t slash_question = ko_make_basic(MOD_MASK_SHIFT, DK_SLSH, DK_QUES);
+const key_override_t backspace_delete = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
+const key_override_t space_underscore = ko_make_basic(MOD_MASK_SHIFT, KC_SPC, DK_UNDS);
 
 // Key Override array
 const key_override_t **key_overrides = (const key_override_t *[]){
-    &shift_comm_key_override,
-    &shift_dot_key_override,
-    &shift_quot_key_override,
-    &shift_scln_key_override,
-    &shift_slsh_key_override,
+    &comma_labk,
+    &dot_rabk,
+    &quote_dblquote, 
+    &semicolon_colon,
+    &slash_question,
+    &backspace_delete,
+    &space_underscore,
     NULL
-};
+}
 
 
 // Callum oneshot
@@ -159,9 +147,7 @@ bool is_oneshot_ignored_key(uint16_t keycode) {
     switch (keycode) {
         case LA_NAV:
         case LA_NUM:
-        case LA_SYM:
         case OSM_SFT:
-        case KC_LSFT:
         case OS_SHFT:
         case OS_CTRL:
         case OS_ALT:
@@ -182,7 +168,7 @@ oneshot_state os_cmd_state = os_up_unqueued;
 
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-    return update_tri_layer_state(state, _NAV, _NUM, _SYS);
+    return update_tri_layer_state(state, _NAV, _NUM, _SYM);
 }
 
 
@@ -339,6 +325,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 register_code16((user_config.macos) ? MAC_LOCK : PC_LOCK);
             } else {
                 unregister_code16((user_config.macos) ? MAC_LOCK : PC_LOCK);
+            }
+            return false;
+        break;
+        case SEARCH:
+            if(record->event.pressed) {
+                register_code16((user_config.macos) ? MAC_SEARCH : PC_SEARCH);
+            } else {
+                unregister_code16((user_config.macos) ? MAC_SEARCH : PC_SEARCH);
             }
             return false;
         break;

@@ -48,7 +48,8 @@
 #define MAC_COPY   LCMD(KC_C)
 #define MAC_PSTE   LCMD(KC_V)
 
-#define MAC_LOCK       LCTL(LGUI(KC_Q))   // lock macOS
+#define MAC_LOCK   LCTL(LGUI(KC_Q))   // lock macOS
+#define MAC_SEARCH LGUI(KC_SPC)
 
 
 // PC version of keycodes
@@ -66,4 +67,5 @@
 #define PC_COPY    LCTL(KC_C)
 #define PC_PSTE    LCTL(KC_V)
 
-#define PC_LOCK       LGUI(KC_L)         // lock Windows
+#define PC_LOCK    LGUI(KC_L)         // lock Windows
+#define PC_SEARCH  KC_LGUI

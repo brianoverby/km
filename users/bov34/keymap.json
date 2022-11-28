@@ -1,0 +1,75 @@
+{
+    "layout": {
+        "split": true,
+        "rows": 3,
+        "columns": 5,
+        "thumbs": 2
+    },
+    "layers": {
+        "qwerty": {
+            "left": [
+                ["q", "w", "e", "r", "t"],
+                ["a", "s", "d", "f", "g"],
+                ["z", "x", "c", "v", "b"]
+            ],
+            "right": [
+                ["y", "u", "i", "o", "p"],
+                ["h", "j", "k", "l", ";"],
+                ["n", "m", ",", ".", "/"]
+            ],
+            "thumbs": {
+                "left":  ["nav", "shift"],
+                "right": ["space", "num"] 
+            } 
+        },
+        "nav": {
+            "left": [
+                ["esc", null, null, "swap win", null],
+                ["shift", "ctrl", "alt", "cmd", "search"],
+                ["undo", "cut", "copy", "paste", "lock"]
+            ],
+            "right": [
+                ["pgup", "home", "up", "end", null],
+                ["pgdn", "left", "down", "right", "enter"],
+                ["tab", "æ", "ø", "å", null]
+            ],
+            "thumbs": {
+                "left": [ "hold::nav", "shift"],
+                "right": [ "bkspc", "num"]
+            } 
+        },
+        "num": {
+            "left": [
+                ["f11", "7", "8", "9", "-"],
+                ["f12", "4", "5", "6", ","],
+                ["tab", "1", "2", "3", "."]
+            ],
+            "right": [
+                ["f1", "f2", "f3", "f4", "f5"],
+                [null, "cmd", "alt", "ctrl", "shift"],
+                ["f6", "f7", "f8", "f9", "f10"]
+            ],
+            "thumbs": {
+                "left": [ "nav", "0"],
+                "right": [ "space", "hold::num"]
+            } 
+        },
+        "sym": {
+            "left": [
+                ["!", "@", "#", "$", "%"],
+                ["&", "*", "_", "'", "\""],
+                ["|", "+", "-", "=", "\\"]
+            ],
+            "right": [
+                [null, "(", ")", "^", "~"],
+                [null, "{", "}", "´", "`"],
+                [null, "[", "]", "¨", null]
+            ],
+            "thumbs": {
+                "left": [ "hold::nav", "shift"],
+                "right": [ "space", "hold::num"]
+            } 
+        }
+    }
+}
+
