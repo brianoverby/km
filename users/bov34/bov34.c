@@ -88,7 +88,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_NAV] = LAYOUT_bov34(
-        KC_ESC,  XXXXXXX, XXXXXXX, SW_WIN,  XXXXXXX,                   KC_PGUP, KC_HOME, KC_UP,   KC_END,  XXXXXXX,
+        KC_ESC,  KC_VOLD, KC_VOLU, SW_WIN,  XXXXXXX,                   KC_PGUP, KC_HOME, KC_UP,   KC_END,  XXXXXXX,
         OS_SHFT, OS_CTRL, OS_ALT,  OS_CMD,  SEARCH,                    KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_ENT,
         UNDO,    CUT,     COPY,    PSTE,    LOCK,                      KC_TAB,  DK_AE,   DK_OE,   DK_AA,   XXXXXXX,
                                    _______, XXXXXXX,                   KC_BSPC, _______
@@ -119,7 +119,7 @@ const key_override_t slash_question = ko_make_basic(MOD_MASK_SHIFT, DK_SLSH, DK_
 const key_override_t backspace_delete = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
 const key_override_t space_underscore = ko_make_basic(MOD_MASK_SHIFT, KC_SPC, DK_UNDS);
 
-// Key Override array
+// Key override array
 const key_override_t **key_overrides = (const key_override_t *[]){
     &comma_labk,
     &dot_rabk,
@@ -165,6 +165,16 @@ oneshot_state os_ctrl_state = os_up_unqueued;
 oneshot_state os_alt_state = os_up_unqueued;
 oneshot_state os_cmd_state = os_up_unqueued;
 
+
+// Send Mac or PC keycode
+void send_mac_or_pc(uint16_t mac_keycode, uint16_t pc_keycode, bool is_pressed) {
+    uint16_t code = (user_config.macos) ? mac_keycode : pc_keycode;
+    if(is_pressed) {
+        register_code16(code);
+    } else {
+        unregister_code16(code);
+    }
+}
 
 
 layer_state_t layer_state_set_user(layer_state_t state) {
@@ -225,115 +235,59 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         // Handle keycodes that differ between Mac and PC
         case AT:
-            if(record->event.pressed) {
-                register_code16((user_config.macos) ? MAC_AT : PC_AT);
-            } else {
-                unregister_code16((user_config.macos) ? MAC_AT : PC_AT);
-            }
+            send_mac_or_pc(MAC_AT, PC_AT, (record->event.pressed));
             return false;
         break;
         case DLR:
-            if(record->event.pressed) {
-                register_code16((user_config.macos) ? MAC_DLR : PC_DLR);
-            } else {
-                unregister_code16((user_config.macos) ? MAC_DLR : PC_DLR);
-            }
+            send_mac_or_pc(MAC_DLR, PC_DLR, (record->event.pressed));
             return false;
         break;
         case BSLS:
-            if(record->event.pressed) {
-                register_code16((user_config.macos) ? MAC_BSLS : PC_BSLS);
-            } else {
-                unregister_code16((user_config.macos) ? MAC_BSLS : PC_BSLS);
-            }
+            send_mac_or_pc(MAC_BSLS, PC_BSLS, (record->event.pressed));
             return false;
         break;
         case PIPE:
-            if(record->event.pressed) {
-                register_code16((user_config.macos) ? MAC_PIPE : PC_PIPE);
-            } else {
-                unregister_code16((user_config.macos) ? MAC_PIPE : PC_PIPE);
-            }
+            send_mac_or_pc(MAC_PIPE, PC_PIPE, (record->event.pressed));
             return false;
         break;
         case LCBR:
-            if(record->event.pressed) {
-                register_code16((user_config.macos) ? MAC_LCBR : PC_LCBR);
-            } else {
-                unregister_code16((user_config.macos) ? MAC_LCBR : PC_LCBR);
-            }
+            send_mac_or_pc(MAC_LCBR, PC_LCBR, (record->event.pressed));
             return false;
         break;
         case RCBR:
-            if(record->event.pressed) {
-                register_code16((user_config.macos) ? MAC_RCBR : PC_RCBR);
-            } else {
-                unregister_code16((user_config.macos) ? MAC_RCBR : PC_RCBR);
-            }
+            send_mac_or_pc(MAC_RCBR, PC_RCBR, (record->event.pressed));
             return false;
         break;
         case PND:
-            if(record->event.pressed) {
-                register_code16((user_config.macos) ? MAC_PND : PC_PND);
-            } else {
-                unregister_code16((user_config.macos) ? MAC_PND : PC_PND);
-            }
+            send_mac_or_pc(MAC_PND, PC_PND, (record->event.pressed));
             return false;
         break;
         case EURO:
-            if(record->event.pressed) {
-                register_code16((user_config.macos) ? MAC_EURO : PC_EURO);
-            } else {
-                unregister_code16((user_config.macos) ? MAC_EURO : PC_EURO);
-            }
+            send_mac_or_pc(MAC_EURO, PC_EURO, (record->event.pressed));
             return false;
         break;
         case UNDO:
-            if(record->event.pressed) {
-                register_code16((user_config.macos) ? MAC_UNDO : PC_UNDO);
-            } else {
-                unregister_code16((user_config.macos) ? MAC_UNDO : PC_UNDO);
-            }
+            send_mac_or_pc(MAC_UNDO, PC_UNDO, (record->event.pressed));
             return false;
         break;
         case CUT:
-            if(record->event.pressed) {
-                register_code16((user_config.macos) ? MAC_CUT : PC_CUT);
-            } else {
-                unregister_code16((user_config.macos) ? MAC_CUT : PC_CUT);
-            }
+            send_mac_or_pc(MAC_CUT, PC_CUT, (record->event.pressed));
             return false;
         break;
         case COPY:
-            if(record->event.pressed) {
-                register_code16((user_config.macos) ? MAC_COPY : PC_COPY);
-            } else {
-                unregister_code16((user_config.macos) ? MAC_COPY : PC_COPY);
-            }
+            send_mac_or_pc(MAC_COPY, PC_COPY, (record->event.pressed));
             return false;
         break;
         case PSTE:
-            if(record->event.pressed) {
-                register_code16((user_config.macos) ? MAC_PSTE : PC_PSTE);
-            } else {
-                unregister_code16((user_config.macos) ? MAC_PSTE : PC_PSTE);
-            }
+            send_mac_or_pc(MAC_PSTE, PC_PSTE, (record->event.pressed));
             return false;
         break;
         case LOCK:
-            if(record->event.pressed) {
-                register_code16((user_config.macos) ? MAC_LOCK : PC_LOCK);
-            } else {
-                unregister_code16((user_config.macos) ? MAC_LOCK : PC_LOCK);
-            }
+            send_mac_or_pc(MAC_LOCK, PC_LOCK, (record->event.pressed));
             return false;
         break;
         case SEARCH:
-            if(record->event.pressed) {
-                register_code16((user_config.macos) ? MAC_SEARCH : PC_SEARCH);
-            } else {
-                unregister_code16((user_config.macos) ? MAC_SEARCH : PC_SEARCH);
-            }
+            send_mac_or_pc(MAC_SEARCH, PC_LOCK, (record->event.pressed));
             return false;
         break;
 
