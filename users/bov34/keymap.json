@@ -24,7 +24,7 @@
         },
         "nav": {
             "left": [
-                ["esc", null, null, "swap win", null],
+                ["esc", "vol down", "vol up", "swap win", "repeat"],
                 ["shift", "ctrl", "alt", "cmd", "search"],
                 ["undo", "cut", "copy", "paste", "lock"]
             ],
@@ -34,7 +34,7 @@
                 ["tab", "æ", "ø", "å", null]
             ],
             "thumbs": {
-                "left": [ "hold::nav", "shift"],
+                "left": [ "hold::nav", null],
                 "right": [ "bkspc", "num"]
             } 
         },
@@ -51,7 +51,7 @@
             ],
             "thumbs": {
                 "left": [ "nav", "0"],
-                "right": [ "space", "hold::num"]
+                "right": [ null, "hold::num"]
             } 
         },
         "sym": {
@@ -66,8 +66,8 @@
                 [null, "[", "]", "¨", null]
             ],
             "thumbs": {
-                "left": [ "hold::nav", "shift"],
-                "right": [ "space", "hold::num"]
+                "left": [ "hold::nav", null],
+                "right": [ null, "hold::num"]
             } 
         }
     }

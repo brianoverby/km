@@ -33,6 +33,7 @@ enum keycodes {
     LOCK,
     SEARCH,
     SW_WIN,
+    REPEAT,
 
     OSTG,  // Toggle OS layout
     OSWIN,
@@ -88,7 +89,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_NAV] = LAYOUT_bov34(
-        KC_ESC,  KC_VOLD, KC_VOLU, SW_WIN,  XXXXXXX,                   KC_PGUP, KC_HOME, KC_UP,   KC_END,  XXXXXXX,
+        KC_ESC,  KC_VOLD, KC_VOLU, SW_WIN,  REPEAT,                    KC_PGUP, KC_HOME, KC_UP,   KC_END,  XXXXXXX,
         OS_SHFT, OS_CTRL, OS_ALT,  OS_CMD,  SEARCH,                    KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_ENT,
         UNDO,    CUT,     COPY,    PSTE,    LOCK,                      KC_TAB,  DK_AE,   DK_OE,   DK_AA,   XXXXXXX,
                                    _______, XXXXXXX,                   KC_BSPC, _______
@@ -166,6 +167,56 @@ oneshot_state os_alt_state = os_up_unqueued;
 oneshot_state os_cmd_state = os_up_unqueued;
 
 
+// Repeat key - credit to KapJI and precondition
+
+// Used to extract the basic tapping keycode from a dual-role key.
+// Example: GET_TAP_KC(MT(MOD_RSFT, KC_E)) == KC_E
+#define GET_TAP_KC(dual_role_key) dual_role_key & 0xFF
+uint16_t last_keycode = KC_NO;
+uint8_t last_modifier = 0;
+uint16_t pressed_keycode = KC_NO;
+
+void process_repeat_key(uint16_t keycode, const keyrecord_t *record) {
+  if (keycode != REPEAT) {
+    // Early return when holding down a pure layer key
+    // to retain modifiers
+    switch (keycode) {
+      case QK_DEF_LAYER ... QK_DEF_LAYER_MAX:
+      case QK_MOMENTARY ... QK_MOMENTARY_MAX:
+      case QK_LAYER_MOD ... QK_LAYER_MOD_MAX:
+      case QK_ONE_SHOT_LAYER ... QK_ONE_SHOT_LAYER_MAX:
+      case QK_TOGGLE_LAYER ... QK_TOGGLE_LAYER_MAX:
+      case QK_TO ... QK_TO_MAX:
+      case QK_LAYER_TAP_TOGGLE ... QK_LAYER_TAP_TOGGLE_MAX:
+      case QK_MODS ... QK_MODS_MAX:
+        return;
+    }
+    if (record->event.pressed) {
+      last_modifier = get_mods() | get_oneshot_mods();
+      switch (keycode) {
+        case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
+        case QK_MOD_TAP ... QK_MOD_TAP_MAX:
+          last_keycode = GET_TAP_KC(keycode);
+          break;
+        default:
+          last_keycode = keycode;
+          break;
+        }
+    }
+  } else { // keycode == REPEAT
+    if (record->event.pressed) {
+      pressed_keycode = last_keycode;
+      register_mods(last_modifier);
+      register_code16(pressed_keycode);
+      unregister_mods(last_modifier);
+    } else {
+      unregister_code16(pressed_keycode);
+    }
+  }
+}
+
+
+
 // Send Mac or PC keycode
 void send_mac_or_pc(uint16_t mac_keycode, uint16_t pc_keycode, bool is_pressed) {
     uint16_t code = (user_config.macos) ? mac_keycode : pc_keycode;
@@ -208,6 +259,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         &os_cmd_state, KC_LCMD, OS_CMD,
         keycode, record
     );
+
+    // Repeat key 
+    process_repeat_key(keycode, record);
 
     switch (keycode) {
 
@@ -287,7 +341,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         break;
         case SEARCH:
-            send_mac_or_pc(MAC_SEARCH, PC_LOCK, (record->event.pressed));
+            send_mac_or_pc(MAC_SEARCH, PC_SEARCH, (record->event.pressed));
             return false;
         break;
 
