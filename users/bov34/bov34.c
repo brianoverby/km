@@ -1,6 +1,7 @@
 #include QMK_KEYBOARD_H
 #include "features/oneshot.h"
 #include "features/swapper.h"
+#include "features/layer_lock.h"
 #include "defines_danish.h"
 
 
@@ -31,6 +32,7 @@ enum keycodes {
     PSTE,
 
     LOCK,
+    LLOCK,
     SEARCH,
     SW_WIN,
     REPEAT,
@@ -92,14 +94,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_ESC,  KC_VOLD, KC_VOLU, SW_WIN,  REPEAT,                    KC_PGUP, KC_HOME, KC_UP,   KC_END,  XXXXXXX,
         OS_SHFT, OS_CTRL, OS_ALT,  OS_CMD,  SEARCH,                    KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_ENT,
         UNDO,    CUT,     COPY,    PSTE,    LOCK,                      KC_TAB,  DK_AE,   DK_OE,   DK_AA,   XXXXXXX,
-                                   _______, XXXXXXX,                   KC_BSPC, _______
+                                   _______, LLOCK,                     KC_BSPC, _______
     ),
     
     [_NUM] = LAYOUT_bov34(
         KC_F11,  KC_7,    KC_8,    KC_9,    DK_MINS,                   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,
         KC_F12,  KC_4,    KC_5,    KC_6,    KC_COMM,                   XXXXXXX, OS_CMD,  OS_ALT,  OS_CTRL, OS_SHFT,
         KC_TAB,  KC_1,    KC_2,    KC_3,    KC_DOT,                    KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,
-                                   _______, KC_0,                      XXXXXXX, _______
+                                   _______, KC_0,                      LLOCK,   _______
     ),
 
     [_SYM] = LAYOUT_bov34(
@@ -262,6 +264,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     // Repeat key 
     process_repeat_key(keycode, record);
+
+    // Layer lock
+    if (!process_layer_lock(keycode, record, LLOCK)) { return false; }
 
     switch (keycode) {
 
