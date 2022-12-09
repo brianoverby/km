@@ -4,6 +4,7 @@ INTROSPECTION_KEYMAP_C = bov34.c
 #SRC += bov34.c
 SRC += features/oneshot.c
 SRC += features/swapper.c
+SRC += features/repeat.c
 SRC += features/layer_lock.c
 
 VPATH += keyboards/gboards
@@ -12,6 +13,7 @@ EXTRAKEY_ENABLE = yes
 KEY_OVERRIDE_ENABLE = yes
 TAP_DANCE_ENABLE = no
 COMBO_ENABLE = yes
+CAPS_WORD_ENABLE = yes
 
 BOOTMAGIC_ENABLE = no
 MOUSEKEY_ENABLE = no
