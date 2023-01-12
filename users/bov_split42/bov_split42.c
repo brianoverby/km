@@ -86,21 +86,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                               KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_ESC,
         KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                               KC_H,    KC_J,    KC_K,    KC_L,    DK_SCLN, DK_QUOT,
         KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                               KC_N,    KC_M,    KC_COMM, KC_DOT,  DK_SLSH, KC_LALT,
-                                            KC_LCMD, LA_SYM,  KC_SPC,           KC_ENT,  KC_BSPC, LA_NAV   
+                                            KC_LCMD, LA_NAV,  KC_ENT,           KC_SPC,  KC_BSPC, LA_SYM   
     ),
 
     [_NAV] = LAYOUT_bov_split42(
-        _______, XXXXXXX, XXXXXXX, KC_7,    KC_8,    KC_9,                               KC_PGUP, KC_HOME, KC_UP,   KC_END,  XXXXXXX, _______,
-        _______, XXXXXXX, XXXXXXX, KC_4,    KC_5,    KC_6,                               KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX, XXXXXXX,
-        _______, XXXXXXX, XXXXXXX, KC_1,    KC_2,    KC_3,                               XXXXXXX, XXXXXXX, _______, _______, XXXXXXX, _______,
-                                            _______, _______, KC_0,             _______, _______, _______
+        _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, CG_TOGG,                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, DK_AA,
+        _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                            KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, DK_AE,   DK_OE,
+        _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+                                            _______, _______, _______,          _______, _______, _______
     ),
 
     [_SYM] = LAYOUT_bov_split42(
-        _______, DK_EXLM, AT,      DK_HASH, DLR,     DK_PERC,                            DK_LPRN, DK_RPRN, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-        _______, DK_AMPR, DK_ASTR, DK_UNDS, DK_GRV,  DK_ACUT,                            LCBR,    RCBR,    DK_CIRC, DK_DIAE, DK_TILD, XXXXXXX,
-        _______, PIPE,    DK_PLUS, DK_MINS, DK_EQL,  BSLS,                               DK_LBRC, DK_RBRC, DK_AE,   DK_OE,   DK_AA,   _______,
-                                            _______, _______, KC_SPC,           _______, _______, _______
+        _______, DK_EXLM, AT,      DK_HASH, DLR,     DK_PERC,                            DK_CIRC, DK_AMPR, DK_ASTR, DK_LPRN, DK_RPRN, BSLS,
+        _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                               DK_MINS, DK_EQL,  DK_GRV,  LCBR,    RCBR,    PIPE,
+        _______, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,                               DK_UNDS, DK_RBRC, DK_TILD, DK_LBRC, DK_RBRC, _______,
+                                            _______, _______, _______,          _______, _______, _______
     )
 };
 
