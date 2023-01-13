@@ -36,15 +36,6 @@ enum keycodes {
     SW_WIN,
     REPEAT,
 
-    OSTG,  // Toggle OS layout
-    OSWIN,
-    OSMAC,
-
-    OS_SHFT,  // Oneshot keys
-    OS_CTRL,
-    OS_ALT,
-    OS_CMD,
-
     NEW_SAFE_RANGE
 };
 
@@ -90,8 +81,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_NAV] = LAYOUT_bov_split42(
-        _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, CG_TOGG,                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, DK_AA,
-        _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                            KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, DK_AE,   DK_OE,
+        _______, LOCK,    SW_WIN,  XXXXXXX, KC_VOLD, KC_VOLU,                            KC_PGUP, KC_HOME, KC_UP,   KC_END,  XXXXXXX, DK_AA,
+        _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, SEARCH,                             KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, DK_AE,   DK_OE,
         _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
                                             _______, _______, _______,          _______, _______, _______
     ),
@@ -132,7 +123,8 @@ bool sw_win_active = false;
 
 // Send Mac or PC keycode
 void send_mac_or_pc(uint16_t mac_keycode, uint16_t pc_keycode, bool is_pressed) {
-    uint16_t code = (user_config.macos) ? mac_keycode : pc_keycode;
+    //uint16_t code = (user_config.macos) ? mac_keycode : pc_keycode;
+    uint16_t code = (keymap_config.swap_lctl_lgui) ?  pc_keycode : mac_keycode;
     if(is_pressed) {
         register_code16(code);
     } else {
@@ -172,7 +164,7 @@ bool caps_word_press_user(uint16_t keycode) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     // Check for Windows or macOS before updating swapper
-    uint16_t WINSW_KEY = (user_config.macos) ? KC_LCMD : KC_LALT;
+    uint16_t WINSW_KEY = (keymap_config.swap_lctl_lgui) ? KC_LALT : KC_LCMD;
 
     update_swapper(
             &sw_win_active, WINSW_KEY, KC_TAB, SW_WIN,
@@ -183,29 +175,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_layer_lock(keycode, record, LLOCK)) { return false; }
 
     switch (keycode) {
-
-        case OSTG: // OS toggle
-            if (record->event.pressed) {
-                user_config.macos ^= 1; // Toggles the status
-                eeconfig_update_user(user_config.raw); // Writes to EEPROM!
-            }
-            return false;
-        break;
-        case OSWIN: // Windows
-            if (record->event.pressed) {
-                user_config.macos = 0; 
-                eeconfig_update_user(user_config.raw); // Writes to EEPROM!
-            }
-            return false;
-        break;
-        case OSMAC: // macOS
-            if (record->event.pressed) {
-                user_config.macos = 1;
-                eeconfig_update_user(user_config.raw); // Writes to EEPROM!
-            }
-            return false;
-        break;
-
         // Handle keycodes that differ between Mac and PC
         case AT:
             send_mac_or_pc(MAC_AT, PC_AT, (record->event.pressed));
