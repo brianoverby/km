@@ -52,25 +52,6 @@ enum keycodes {
 #define LA_SYM MO(_SYM)
 #define LA_NAV MO(_NAV)
 
-// User config 
-typedef union {
-    uint32_t raw;
-    struct {
-        bool macos :1;
-    };
-} user_config_t;
-user_config_t user_config;
-
-
-// Init user settings
-void keyboard_post_init_user(void) {
-    user_config.raw = eeconfig_read_user(); // Read config from EEPROM
-    #ifdef RGB_MATRIX_ENABLE
-    rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
-    rgb_matrix_sethsv_noeeprom(HSV_OFF);
-    #endif
-};
-
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_BASE] = LAYOUT_bov_split42(
@@ -81,9 +62,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_NAV] = LAYOUT_bov_split42(
-        _______, LOCK,    SW_WIN,  XXXXXXX, KC_VOLD, KC_VOLU,                            KC_PGUP, KC_HOME, KC_UP,   KC_END,  XXXXXXX, DK_AA,
-        _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, SEARCH,                             KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, DK_AE,   DK_OE,
-        _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+        _______, LOCK,    SW_WIN,  SEARCH,  KC_VOLD, KC_VOLU,                            KC_PGUP, KC_HOME, KC_UP,   KC_END,  XXXXXXX, DK_AA,
+        _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                              KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, DK_AE,   DK_OE,
+        _______, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,                             KC_F11,  KC_F12,  XXXXXXX, XXXXXXX, XXXXXXX, _______,
                                             _______, _______, _______,          _______, _______, _______
     ),
 
@@ -123,7 +104,6 @@ bool sw_win_active = false;
 
 // Send Mac or PC keycode
 void send_mac_or_pc(uint16_t mac_keycode, uint16_t pc_keycode, bool is_pressed) {
-    //uint16_t code = (user_config.macos) ? mac_keycode : pc_keycode;
     uint16_t code = (keymap_config.swap_lctl_lgui) ?  pc_keycode : mac_keycode;
     if(is_pressed) {
         register_code16(code);
