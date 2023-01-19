@@ -90,7 +90,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_SYM] = LAYOUT_bov_split42(
         _______, DK_EXLM, AT,      DK_HASH, DLR,     DK_PERC,                            DK_CIRC, DK_AMPR, DK_ASTR, DK_LPRN, DK_RPRN, BSLS,
         _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                               DK_MINS, DK_EQL,  DK_GRV,  LCBR,    RCBR,    PIPE,
-        _______, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,                               DK_UNDS, DK_RBRC, DK_TILD, DK_LBRC, DK_RBRC, _______,
+        _______, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,                               DK_UNDS, DK_PLUS, DK_TILD, DK_LBRC, DK_RBRC, _______,
                                             _______, _______, _______,          _______, _______, _______
     )
 };
