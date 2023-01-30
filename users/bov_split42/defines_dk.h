@@ -10,8 +10,7 @@
 #define DK_DIAE    KC_RBRC       // ¨ (dead)
 #define DK_QUOT    KC_NUHS       // '
 #define DK_MINS    KC_SLSH       // -
-#define DK_LABK    KC_NUBS       // <
-#define DK_RABK    S(KC_NUBS)    // >
+
 #define DK_EXLM    S(KC_1)       // !
 #define DK_DQUO    S(KC_2)       // "
 #define DK_HASH    S(KC_3)       // #
@@ -42,6 +41,8 @@
 #define MAC_RCBR   LSFT(LALT(KC_9))   // }
 #define MAC_PND    LALT(KC_4)         // £
 #define MAC_EURO   LSFT(KC_4)         // €
+#define MAC_LABK   KC_GRV             // <
+#define MAC_RABK   S(KC_GRV)          // >
 
 #define MAC_UNDO   LCMD(KC_Z)
 #define MAC_CUT    LCMD(KC_X)
@@ -61,6 +62,8 @@
 #define PC_RCBR    ALGR(KC_0)         // }
 #define PC_PND     ALGR(KC_3)         // £
 #define PC_EURO    ALGR(KC_5)         // €
+#define PC_LABK    KC_NUBS            // <
+#define PC_RABK    S(KC_NUBS)         // >
 
 #define PC_UNDO    LCTL(KC_Z)
 #define PC_CUT     LCTL(KC_X)
