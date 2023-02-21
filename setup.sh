@@ -6,6 +6,7 @@ cwd=$(pwd)
 ln -sf "$cwd/users/bov34/" "$cwd/../qmk_firmware/users/"
 ln -sf "$cwd/users/bov48/" "$cwd/../qmk_firmware/users/"
 ln -sf "$cwd/users/bov_split42/" "$cwd/../qmk_firmware/users/"
+ln -sf "$cwd/users/bov_split36/" "$cwd/../qmk_firmware/users/"
 
 # Boardsource Microdox
 ln -sf "$cwd/keyboards/microdox/keymaps/bov34/" "$cwd/../qmk_firmware/keyboards/boardsource/microdox/keymaps/"
@@ -23,4 +24,8 @@ ln -sf "$cwd/keyboards/ferris/keymaps/bov34/" "$cwd/../qmk_firmware/keyboards/fe
 
 # Corne
 ln -sf "$cwd/keyboards/corne/keymaps/bov_split42/" "$cwd/../qmk_firmware/keyboards/crkbd/keymaps/"
+ln -sf "$cwd/keyboards/corne/keymaps/bov_split36/" "$cwd/../qmk_firmware/keyboards/crkbd/keymaps/"
+
+# Aurora Corne
 ln -sf "$cwd/keyboards/corne/keymaps/bov_split42/" "$cwd/../qmk_firmware/keyboards/splitkb/aurora/corne/keymaps/"
+ln -sf "$cwd/keyboards/corne/keymaps/bov_split36/" "$cwd/../qmk_firmware/keyboards/splitkb/aurora/corne/keymaps/"
