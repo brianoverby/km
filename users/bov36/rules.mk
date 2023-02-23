@@ -1,5 +1,5 @@
 # Fix after QMK Breaking Changes 2022 August 27: https://github.com/qmk/qmk_firmware/pull/17559/files
-INTROSPECTION_KEYMAP_C = bov_split36.c
+INTROSPECTION_KEYMAP_C = bov36.c
 
 SRC += features/swapper.c
 SRC += features/layer_lock.c
