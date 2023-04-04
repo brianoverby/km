@@ -23,6 +23,7 @@ ln -sf "$cwd/keyboards/planck/keymaps/bov48/" "$cwd/../qmk_firmware/keyboards/pl
 ln -sf "$cwd/keyboards/ferris/keymaps/bov34/" "$cwd/../qmk_firmware/keyboards/ferris/keymaps/"
 
 # Corne
+ln -sf "$cwd/keyboards/corne/keymaps/bov34/" "$cwd/../qmk_firmware/keyboards/crkbd/keymaps/"
 ln -sf "$cwd/keyboards/corne/keymaps/bov36/" "$cwd/../qmk_firmware/keyboards/crkbd/keymaps/"
 ln -sf "$cwd/keyboards/corne/keymaps/bov42/" "$cwd/../qmk_firmware/keyboards/crkbd/keymaps/"
 
